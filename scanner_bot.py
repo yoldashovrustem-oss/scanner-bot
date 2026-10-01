@@ -18,7 +18,7 @@ TELEGRAM_CHAT_ID = "8969022054"
 TIMEFRAMES = ['1h', '4h', '1d']
 RSI_PERIOD = 14
 SMA_PERIOD = 14
-VOLUME_MIN = 1_000_000
+VOLUME_MIN = 5_000_000
 SIGNAL_COOLDOWN_HOURS = 24
 
 SIGNAL_HISTORY_FILE = "signal_history.json"
@@ -106,7 +106,7 @@ def telegram_commands_listener():
                                 f"💰 <b>Мин. объем:</b> ${VOLUME_MIN:,}\n"
                                 f"🎯 <b>Стратегия:</b> SL 3.5% | TP1 3% | TP2 7%\n"
                                 f"⏰ <b>Кулдаун:</b> {SIGNAL_COOLDOWN_HOURS} часов\n\n"
-                                f"💡 <i>Бот непрерывно сканирует рынок!</i>"
+                                f" <i>Бот непрерывно сканирует рынок!</i>"
                             )
                             send_telegram_message(msg)
                             print(f"📨 Отправлен статус по команде {text}")
@@ -181,7 +181,7 @@ def check_signal(exchange, symbol, timeframe, volume_24h):
                 f"━━━━━━━━━━━━━━━━\n"
                 f"💡 <i>Совет: Забери половину на Цели 1 и переведи стоп в безубыток!</i>\n"
                 f" <b>Таймфрейм:</b> {timeframe}\n"
-                f"📈 <b>RSI:</b> {curr_rsi:.2f} | <b>SMA:</b> {curr_sma:.2f}\n"
+                f" <b>RSI:</b> {curr_rsi:.2f} | <b>SMA:</b> {curr_sma:.2f}\n"
                 f"⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
                 f"🔄 #{coin_name}"
             )
@@ -207,12 +207,12 @@ def main():
         return
     
     send_telegram_message(
-        f"🤖 <b>Сканер запущен!</b>\n\n"
+        f" <b>Сканер запущен!</b>\n\n"
         f"⏱ Таймфреймы: {', '.join(TIMEFRAMES)}\n"
         f"💰 Мин. объем: ${VOLUME_MIN:,}\n"
         f"🎯 Стратегия: SL 3.5% | TP1 3% | TP2 7%\n"
-        f"⏰ Кулдаун: {SIGNAL_COOLDOWN_HOURS} часов\n\n"
-        f"💡 Напиши <b>/start</b> чтобы проверить статус бота"
+        f" Кулдаун: {SIGNAL_COOLDOWN_HOURS} часов\n\n"
+        f" Напиши <b>/start</b> чтобы проверить статус бота"
     )
     
     # 🔧 ЗАПУСКАЕМ СЛУШАТЕЛЬ КОМАНД В ОТДЕЛЬНОМ ПОТОКЕ
@@ -221,7 +221,7 @@ def main():
     print("✅ Слушатель команд запущен в отдельном потоке")
     
     # Получаем все монеты с объёмом один раз
-    print("\n📊 Загружаем список монет...")
+    print("\n Загружаем список монет...")
     tickers = exchange.fetch_tickers()
     
     qualified_symbols = []
@@ -260,7 +260,7 @@ def main():
             
             # Обновляем список монет каждые 10 циклов
             if cycle % 10 == 0:
-                print("\n🔄 Обновляем список монет...")
+                print("\n Обновляем список монет...")
                 tickers = exchange.fetch_tickers()
                 qualified_symbols = []
                 for symbol, ticker in tickers.items():
@@ -278,7 +278,7 @@ def main():
             
         except KeyboardInterrupt:
             print("\n👋 Остановлено")
-            send_telegram_message("👋 Сканер остановлен")
+            send_telegram_message(" Сканер остановлен")
             break
             
         except Exception as e:
